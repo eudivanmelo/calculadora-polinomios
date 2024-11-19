@@ -80,13 +80,33 @@ int main() {
             cout << "O Grau do Polinomio ("<<p1<<") eh: " << p1.degree() << endl << endl;
         }
         else if (line == "t" || line == "T"){
+            cout << "======= TAMANHO =======" << endl;
 
+            getline(file, operation);
+            List p1 = ListFromString(operation);
+
+            cout << "O Tamanho do Polinomio ("<<p1<<") eh: " << p1.size() << endl << endl;
         }
         else if (line == "a" || line == "A"){
+            cout << "======= AVALIAR =======" << endl;
 
+            float x;
+            string value;
+            getline(file, value);
+            x = stof(value);
+
+            getline(file, operation);
+            List p1 = ListFromString(operation);
+
+            cout << "O Polinomio ("<<p1<<") avaliado em x = " << x << " eh: " << p1.evaluate(x) << endl << endl;
         }
         else if (line == "p" || line == "P"){
+            cout << "======= IMPRIMIR ======" << endl;
 
+            getline(file, operation);
+            List p1 = ListFromString(operation);
+
+            cout << "O Polinomio eh: " << p1 << endl << endl;
         }
         else {
             cerr << "Erro na leitura do arquivo, alguma operacao incorreta! Data: " << line << endl << endl;
