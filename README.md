@@ -25,32 +25,49 @@ Criar duas classes denominadas 'Node' e 'List'. Na classe 'Node' deverá ter doi
 
 ## List
 
-- Privados
+- **Privados**
     - **head**: Ponteiro para o primeiro nó da lista encadeada.
-    - **max_size**: Define o número máximo de elementos que podem ser adicionados à lista.
     
-- Publicos
-    - **Contrutor**: Inicializa a lista encadeada.
+- **Públicos**
+    - **Construtor**: Inicializa a lista encadeada.
     - **Destrutor**: Remove todos os nós e libera a memória alocada.
-    - **Append**: Adiciona um novo nó a da lista de forma ordenada por grau.
+    - **Append**: Adiciona um novo nó à lista de forma ordenada por grau.
     - **Remove**: Remove um nó da lista.
     - **Search**: Busca um nó na lista pelo índice.
     - **Exists**: Verifica se um nó existe na lista.
-    - **Length**: Retorna o numero de elementos atualmente na lista.
+    
+    - **degree**: Retorna o grau do polinômio (maior grau na lista).
+    - **size**: Retorna o número de termos (nós) atualmente na lista.
+    - **evaluate**: Avalia o polinômio para um valor real fornecido de `x`.
+    - **toString**: Retorna uma representação textual do polinômio como uma string.
+    - **Simplify**: Método interno que simplifica a lista somando termos de mesmo grau e removendo termos com coeficiente zero.
+    - **Sobrecarga de operadores**:
+        - `operator+`: Adição de dois polinômios.
+        - `operator-`: Subtração de dois polinômios.
+        - `operator*`: Multiplicação de dois polinômios.
+        - `operator<<`: Exibição do polinômio como string.
 
 ## Tarefa
 A entrada de dados deverá ser feita à partir de um arquivo texto simples(txt) contendo, em cada
-linha, um polinômio ou uma operação a ser realizada sobre polinômio. Por exemplo:
+linha, um ou mais polinômios, ou uma operação a ser realizada sobre polinômio(s). Por exemplo:
 
 ```txt
 +
-10 2 5 8 -3 1 7 0
-2 1 5 2 -12 0
-g
--5 3 7 2
-p
-8 2 2 3 8 1 -1 0
-a
-5
--3 5 2 0
+3 5 2 8 -1 3 4 2 0
+2 4 5 3 -2 2 1 1 5 0
+-
+4 5 3 4 -2 3 1 0
+3 3 5 2 1 1 -3 0
+*
+3 6 2 5 -3 3 4 0
+4 4 1 3 -2 2 1 0
+G
+4 6 3 4 1 2 1 0
+A
+6
+2 4 1 3 2 2 3 1 0
+T
+3 4 2 3 -5 1 4 0
+P
+2 4 -2 3 3 2 1 0
 ```

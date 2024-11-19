@@ -3,7 +3,7 @@
 Node::Node(float coefficient, int degree){
     this->setCoefficient(coefficient);
     this->setDegree(degree);
-    this->setNext(nullptr);
+    this->next = nullptr;
 }
 
 float Node::getCoefficient(){
@@ -22,10 +22,10 @@ void Node::setDegree(int value){
     this->degree = value;
 }
 
-Node* Node::getNext(){
+Node* Node::getNext(){ 
     if (this->next != nullptr)
-        return *this->next;
-    else:
+        return this->next;
+    else
         return nullptr;
 }
 
