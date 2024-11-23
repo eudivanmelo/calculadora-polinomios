@@ -4,10 +4,25 @@
 
 using namespace std;
 
+/**
+ * @file list.cpp
+ * @brief Implementação da classe List.
+ */
+
+/**
+ * @brief Construtor padrão da classe List.
+ *
+ * Inicializa a lista com o ponteiro de cabeça (head) como nulo.
+ */
 List::List(){
     this->head = nullptr;
 }
 
+/**
+ * @brief Destrutor da classe List.
+ *
+ * Este destrutor libera a memória alocada para todos os nós da lista.
+ */
 List::~List(){
     Node* current = this->head;
     while(current != nullptr){
@@ -17,6 +32,12 @@ List::~List(){
     }
 }
 
+/**
+ * @brief Simplifica a lista de nós combinando termos com o mesmo grau e removendo nós com coeficiente zero.
+ *
+ * Esta função percorre a lista de nós, combinando termos que possuem o mesmo grau e somando seus coeficientes.
+ * Se o coeficiente resultante for zero, o nó é removido da lista.
+ */
 void List::Simplify(){
     if (!head) return;
 
@@ -48,13 +69,24 @@ void List::Simplify(){
             current = current->getNext();
             delete temp;
         }
-        else
+        else{
             prev = current;
             current = current->getNext();
+        }
     }
 }
 
 
+/**
+ * @brief Adiciona um novo nó à lista de forma ordenada.
+ * 
+ * @param coefficient Coeficiente do polinômio.
+ * @param degree Grau do polinômio.
+ * 
+ * Se o coeficiente for zero, a função retorna sem adicionar o nó.
+ * Caso contrário, cria um novo nó e o insere na posição correta
+ * na lista, mantendo a ordem decrescente dos graus.
+ */
 void List::Append(float coefficient, int degree){
     if (coefficient == 0)
         return;
@@ -77,6 +109,15 @@ void List::Append(float coefficient, int degree){
     }
 }
 
+/**
+ * @brief Remove um nó específico da lista.
+ * 
+ * @param node O nó a ser removido da lista.
+ * 
+ * Se a lista estiver vazia, a função retorna imediatamente.
+ * Se o nó a ser removido for o nó cabeça, a cabeça é atualizada para o próximo nó.
+ * Caso contrário, a função percorre a lista até encontrar o nó e o remove, ajustando os ponteiros.
+ */
 void List::Remove(Node node){
     if (!head) {
         return; 
@@ -101,16 +142,33 @@ void List::Remove(Node node){
     }
 }
 
-Node List::Search(int index){
+/**
+ * @brief Procura e retorna o nó na posição especificada.
+ * 
+ * @param index Índice do nó a ser procurado.
+ * @return Node Nó encontrado na posição especificada.
+ */
+Node List::Search(int degree){
     Node* current = head;
 
-    for(int i = 0; i < index; i++){
+    while(current != nullptr){
+        if (current->getDegree() == degree){
+            return *current;
+        }
+
         current = current->getNext();
     }
 
-    return *current;
+    return Node(0, 0);
 }
 
+/**
+ * @brief Verifica se um nó específico existe na lista.
+ * 
+ * @param node Referência para o nó a ser verificado.
+ * @return true Se o nó existe na lista.
+ * @return false Se o nó não existe na lista.
+ */
 bool List::Exists(Node node){
     Node* current = head;
 
@@ -125,13 +183,25 @@ bool List::Exists(Node node){
     return false;
 }
 
-
+/**
+ * @brief Retorna o grau do polinômio.
+ * 
+ * @return int Grau do polinômio. Retorna 0 se a lista estiver vazia.
+ */
 int List::degree() const{
     if (!head) return 0;
 
     return head->getDegree();
 }
 
+/**
+ * @brief Retorna o tamanho da lista.
+ * 
+ * Este método percorre a lista encadeada a partir do nó cabeça (head) e conta
+ * o número de nós presentes na lista.
+ * 
+ * @return int O número de elementos na lista.
+ */
 int List::size() const{
     int length = 0;
     Node* current = this->head;
@@ -144,6 +214,12 @@ int List::size() const{
     return length;
 }
 
+/**
+ * @brief Avalia o polinômio representado pela lista para um dado valor de x.
+ * 
+ * @param x Valor de x para o qual o polinômio será avaliado.
+ * @return float Resultado da avaliação do polinômio.
+ */
 float List::evaluate(float x) const{
     float result = 0;
 
@@ -157,6 +233,11 @@ float List::evaluate(float x) const{
     return result;
 }
 
+/**
+ * @brief Converte a lista de polinômios em uma string.
+ *
+ * @return Uma string representando o polinômio. Se a lista estiver vazia, retorna "List is empty".
+ */
 std::string List::toString() const{
     if (!head)
         return "List is empty";
@@ -189,11 +270,32 @@ std::string List::toString() const{
     return result;
 }
 
+/**
+ * @brief Sobrecarga do operador de inserção (<<) para a classe List.
+ * 
+ * Este operador permite que um objeto da classe List seja impresso diretamente
+ * em um fluxo de saída (std::ostream), como std::cout, utilizando o método 
+ * toString() da classe List para obter a representação em string do objeto.
+ * 
+ * @param os Referência para o fluxo de saída.
+ * @param p Referência constante para o objeto List a ser impresso.
+ * @return std::ostream& Referência para o fluxo de saída, permitindo encadeamento.
+ */
 std::ostream& operator<<(std::ostream& os, const List& p){
     os << p.toString();
     return os;
 }
 
+/**
+ * @brief Sobrecarga do operador + para somar duas listas de polinômios.
+ * 
+ * @param p1 Primeira lista de polinômios.
+ * @param p2 Segunda lista de polinômios.
+ * @return List Resultado da soma das duas listas de polinômios.
+ * 
+ * Este método percorre ambas as listas, adiciona os termos ao resultado
+ * e simplifica o polinômio resultante.
+ */
 List operator+(const List& p1, const List& p2){
     List result;
 
@@ -214,6 +316,16 @@ List operator+(const List& p1, const List& p2){
     return result;
 }
 
+/**
+ * @brief Sobrecarga do operador de subtração para listas de polinômios.
+ *
+ * Esta função realiza a subtração de dois polinômios representados por listas encadeadas.
+ * Cada nó da lista contém um coeficiente e um grau do polinômio.
+ *
+ * @param p1 Primeira lista de polinômio.
+ * @param p2 Segunda lista de polinômio.
+ * @return List Resultado da subtração dos polinômios.
+ */
 List operator-(const List& p1, const List& p2){
     List result;
 
@@ -234,6 +346,16 @@ List operator-(const List& p1, const List& p2){
     return result;
 }
 
+/**
+ * @brief Sobrecarga do operador * para multiplicação de polinômios representados por listas encadeadas.
+ * 
+ * @param p1 Primeiro polinômio.
+ * @param p2 Segundo polinômio.
+ * @return List Resultado da multiplicação dos polinômios p1 e p2.
+ * 
+ * Este método percorre cada termo dos polinômios p1 e p2, multiplicando os coeficientes e somando os graus.
+ * Os termos resultantes são adicionados à lista resultante, que é simplificada antes de ser retornada.
+ */
 List operator*(const List& p1, const List& p2){
     List result;
 
@@ -249,4 +371,20 @@ List operator*(const List& p1, const List& p2){
 
     result.Simplify();
     return result;
+}
+
+/**
+ * @brief Sobrecarga do operador de índice para acessar um nó na lista.
+ * 
+ * @param index Índice do nó a ser acessado.
+ * @return Node& Referência ao nó na posição especificada.
+ */
+Node& List::operator[](const int index) {
+    Node* current = head;
+
+    for (int i = 0; i < index; i++) {
+        current = current->getNext();
+    }
+
+    return *current;
 }

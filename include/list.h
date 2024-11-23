@@ -16,7 +16,7 @@ class List {
 
         void Append(float coefficient, int degree);
         void Remove(Node node);
-        Node Search(int index);
+        Node Search(int degree);
         bool Exists(Node node);
 
         // Operations
@@ -28,6 +28,7 @@ class List {
         friend List operator+(const List& p1, const List& p2);
         friend List operator-(const List& p1, const List& p2);
         friend List operator*(const List& p1, const List& p2);
+        Node& operator[](const int index);
 };
 
 #endif // LIST_H
